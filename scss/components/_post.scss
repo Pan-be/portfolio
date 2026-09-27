@@ -1,0 +1,83 @@
+@use '../util/' as u;
+
+.post {
+
+    display: grid;
+    justify-items: center;
+    gap: 20px;
+
+    &__multi {
+        max-width: 400px;
+    }
+
+    & a {
+        color: var(--color-text);
+        font-style: italic;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    &__wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+
+    }
+
+    &__title {
+        text-align: center;
+    }
+
+    &__header {
+        max-width: 700px;
+        text-align: center;
+        display: grid;
+        justify-items: center;
+        gap: 10px;
+    }
+
+    & .entry-summary {
+        display: grid;
+        justify-items: center;
+    }
+
+    &__single {
+        width: 100%;
+        display: grid;
+        justify-items: center;
+
+        & img {
+            @include u.breakpoint(medium) {
+                max-width: u.rem(753);
+
+            }
+        }
+
+        & .entry-content {
+            display: grid;
+            justify-items: start;
+        }
+
+        & p {
+            max-width: 80ch;
+        }
+
+        & h2 {
+            padding-block: 30px;
+        }
+
+        & h3 {
+            max-width: 718px;
+            justify-self: start;
+            @include u.fs-fluid(u.rem(375), u.rem(1200), u.rem(20), u.rem(24));
+
+        }
+
+        & ol>li {
+            padding-block: u.rem(6);
+        }
+    }
+}

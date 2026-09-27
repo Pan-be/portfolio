@@ -1,0 +1,33 @@
+@use '../util/' as u;
+
+.code {
+    &__wrapper {
+        margin-block: u.rem(5);
+        position: relative;
+        background-color: var(--color-accent2);
+        color: #d4d4d4;
+        padding: 15px;
+        border-radius: 5px;
+        font-family: 'Courier New', monospace;
+        overflow-x: auto;
+        @include u.fs-fluid(u.rem(375), u.rem(1200), u.rem(7), u.rem(14));
+    }
+
+    &__button {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color: var(--color-bg);
+        color: #fff;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 3px;
+        cursor: pointer;
+        font-size: 12px;
+        transition: background-color 15ms ease-in-out;
+
+        &:hover {
+            background-color: var(--color-accent2-hover);
+        }
+    }
+}

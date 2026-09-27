@@ -1,0 +1,43 @@
+@use '../util/' as u;
+
+#comments {
+    display: grid;
+    justify-items: center;
+    gap: 20px;
+
+    h2,
+    h3 {
+        text-align: center;
+        padding-block: 10px;
+    }
+}
+
+.comments {
+    & ul {
+        margin: 0;
+        padding: 0;
+        display: grid;
+        gap: 20px;
+    }
+
+    & li {
+        list-style: none;
+    }
+
+    & .comment {
+        &-author {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+        }
+
+        &-body p {
+            padding-inline-start: 10px;
+            font-style: italic;
+        }
+
+        &-meta {
+            padding-block: 10px;
+        }
+    }
+}

@@ -1,0 +1,45 @@
+@use '../util/' as u;
+
+h1,
+h2,
+h3,
+h4 {
+    margin: 0;
+    line-height: 1;
+}
+
+// 48, 64 px
+h1 {
+    @include u.fs-fluid(u.rem(375), u.rem(1200), u.rem(48), u.rem(64));
+}
+
+h2 {
+    @include u.fs-fluid(u.rem(375), u.rem(1200), u.rem(36), u.rem(48));
+}
+
+h3 {
+    @include u.fs-fluid(u.rem(375), u.rem(1200), u.rem(24), u.rem(36));
+    letter-spacing: .05em;
+    text-transform: uppercase;
+}
+
+h4 {
+    text-transform: uppercase;
+}
+
+p,
+li {
+    line-height: 1.5;
+    max-width: 60ch;
+}
+
+.very-small {
+    @include u.fs-fluid(u.rem(375), u.rem(1200), u.rem(13), u.rem(15));
+    line-height: 1;
+}
+
+.plus {
+    font-weight: 900;
+    font-size: u.rem(22);
+    color: var(--color-accent);
+}

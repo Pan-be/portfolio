@@ -1,0 +1,43 @@
+@use '../util/' as u;
+
+.contact {
+
+    @include u.breakpoint(medium) {
+        justify-items: center;
+    }
+
+    &__links {
+        margin: 0;
+        padding: 0;
+        display: grid;
+        gap: 16px;
+    }
+
+    &__item {
+        list-style-type: none;
+    }
+
+    &__link {
+        display: grid;
+        grid-template-columns: u.rem(24) auto;
+        gap: 20px;
+        align-items: center;
+        color: var(--color-text);
+        font-weight: 700;
+        font-size: u.rem(18);
+        transition: color 150ms ease-in-out;
+
+        &:hover {
+            color: var(--color-accent);
+
+            svg>path {
+                fill: var(--color-accent);
+            }
+        }
+    }
+
+    &__icon {
+        transition: fill 150ms ease-in-out
+    }
+
+}
