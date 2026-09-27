@@ -22,7 +22,6 @@ function panbe_setup()
 
     add_image_size('blog-thumbnail', 300, 9999, false);
 }
-add_action('admin_notices', 'panbe_notice');
 function register_acf_feature_translations()
 {
     if (function_exists('pll_register_string')) {
@@ -39,21 +38,6 @@ function register_acf_feature_translations()
     }
 }
 add_action('init', 'register_acf_feature_translations');
-function panbe_notice()
-{
-    $user_id = get_current_user_id();
-    $admin_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http') . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-    $param = (count($_GET)) ? '&' : '?';
-    if (!get_user_meta($user_id, 'panbe_notice_dismissed_11') && current_user_can('manage_options'))
-        echo '<div class="notice notice-info"><p><a href="' . esc_url($admin_url), esc_html($param) . 'dismiss" class="alignright" style="text-decoration:none"><big>' . esc_html__('Ⓧ', 'panbe') . '</big></a>' . wp_kses_post(__('<big><strong>🏆 Thank you for using panbe!</strong></big>', 'panbe')) . '<p>' . esc_html__('Powering over 10k websites! Buy me a sandwich! 🥪', 'panbe') . '</p><a href="https://github.com/bhadaway/panbe/issues/57" class="button-primary" target="_blank"><strong>' . esc_html__('How do you use panbe?', 'panbe') . '</strong></a> <a href="https://opencollective.com/panbe" class="button-primary" style="background-color:green;border-color:green" target="_blank"><strong>' . esc_html__('Donate', 'panbe') . '</strong></a> <a href="https://wordpress.org/support/theme/panbe/reviews/#new-post" class="button-primary" style="background-color:purple;border-color:purple" target="_blank"><strong>' . esc_html__('Review', 'panbe') . '</strong></a> <a href="https://github.com/bhadaway/panbe/issues" class="button-primary" style="background-color:orange;border-color:orange" target="_blank"><strong>' . esc_html__('Support', 'panbe') . '</strong></a></p></div>';
-}
-add_action('admin_init', 'panbe_notice_dismissed');
-function panbe_notice_dismissed()
-{
-    $user_id = get_current_user_id();
-    if (isset($_GET['dismiss']))
-        add_user_meta($user_id, 'panbe_notice_dismissed_11', 'true', true);
-}
 add_action('wp_enqueue_scripts', 'panbe_enqueue');
 function panbe_enqueue()
 {
