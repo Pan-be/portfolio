@@ -16,22 +16,27 @@
         gtag('config', 'G-JHD02FRXD5');
     </script>
 
-    <meta name="description"
-        content="Pan.Be - Freelance Web Developer. I build modern, responsive websites, e-commerce platforms, and custom web applications.">
+    <?php
+    // Tagline (Settings > General, translated per language by Polylang); English fallback while it's empty.
+    $panbe_description = get_bloginfo('description');
+    if ($panbe_description === '') {
+        $panbe_description = 'Pan.Be - Freelance Web Developer. I build modern, responsive websites, e-commerce platforms, and custom web applications.';
+    }
+    $panbe_title = wp_get_document_title();
+    ?>
+    <meta name="description" content="<?php echo esc_attr($panbe_description); ?>">
     <meta name="keywords" content="freelance web developer, web development, WordPress, e-commerce, frontend, backend">
     <meta name="author" content="Pan.Be">
 
-    <meta property="og:title" content="Pan.Be - Freelance Web Developer">
-    <meta property="og:description"
-        content="I build modern, responsive websites, e-commerce platforms, and custom web applications.">
+    <meta property="og:title" content="<?php echo esc_attr($panbe_title); ?>">
+    <meta property="og:description" content="<?php echo esc_attr($panbe_description); ?>">
     <meta property="og:image" content="<?php echo get_template_directory_uri(); ?>/panbe_hero.webp">
     <meta property="og:url" content="<?php echo get_permalink(); ?>">
     <meta property="og:type" content="website">
 
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Pan.Be - Freelance Web Developer">
-    <meta name="twitter:description"
-        content="I build modern, responsive websites, e-commerce platforms, and custom web applications.">
+    <meta name="twitter:title" content="<?php echo esc_attr($panbe_title); ?>">
+    <meta name="twitter:description" content="<?php echo esc_attr($panbe_description); ?>">
     <meta name="twitter:image" content="<?php echo get_template_directory_uri(); ?>/panbe_hero.webp">
 
 

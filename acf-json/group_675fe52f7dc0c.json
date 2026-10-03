@@ -157,7 +157,7 @@
                 "Vitest": "Vitest",
                 "WordPress (Elementor, Polylang, WooCommerce)": "WordPress (Elementor, Polylang, WooCommerce)",
                 "PHP": "PHP",
-                "Symphony": "Symphony",
+                "Symfony": "Symfony",
                 "Next.js": "Next.js",
                 "Git": "Git",
                 "SVN": "SVN",
@@ -300,5 +300,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1791062017
+    "modified": 1791069331
 }
