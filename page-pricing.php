@@ -73,7 +73,8 @@ Template Name: Pricing
                                     </div>
                                 </div>
                                 <?php
-                                $pozycje_w_menu_field = acf_get_field('pozycje_w_menu');
+                                // By key, not name: both language groups have a 'pozycje_w_menu' field, and some PL plans point at the EN one.
+                                $pozycje_w_menu_field = acf_get_field(my_theme_is_polish() ? 'field_67c5593019c40' : 'field_67ec3fe41e70b');
                                 $pozycje_w_menu_label = $pozycje_w_menu_field ? $pozycje_w_menu_field['label'] : 'Pozycje w menu';
                                 ?>
                                 <div class="pricing__feature">
