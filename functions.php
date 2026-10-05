@@ -44,6 +44,7 @@ function panbe_enqueue()
     // Version = file mtime: a deploy that changes the file busts browser and SG Optimizer caches.
     wp_enqueue_style('panbe-style', get_stylesheet_directory_uri() . '/scss/style.css', array(), filemtime(get_stylesheet_directory() . '/scss/style.css'));
     wp_enqueue_script('panbe-script', get_stylesheet_directory_uri() . '/js/script.js', array(), filemtime(get_stylesheet_directory() . '/js/script.js'), true);
+    wp_enqueue_script('panbe-consent', get_stylesheet_directory_uri() . '/js/consent.js', array(), filemtime(get_stylesheet_directory() . '/js/consent.js'), true);
 
     wp_enqueue_script('jquery');
 }

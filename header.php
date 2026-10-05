@@ -3,17 +3,28 @@
 
 <head>
 
-    <!-- Google tag (gtag.js): inert until CookieYes gets consent for the Analytics category -->
-    <script type="text/plain" data-cookieyes="cookieyes-analytics" async src="https://www.googletagmanager.com/gtag/js?id=G-JHD02FRXD5"></script>
-    <script type="text/plain" data-cookieyes="cookieyes-analytics">
+    <!-- Google tag (gtag.js): loaded only after the visitor accepts analytics in the cookie banner (js/consent.js) -->
+    <script>
         window.dataLayer = window.dataLayer || [];
 
         function gtag() {
             dataLayer.push(arguments);
         }
-        gtag('js', new Date());
 
-        gtag('config', 'G-JHD02FRXD5');
+        window.panbeLoadAnalytics = function() {
+            if (window.panbeAnalyticsLoaded) return;
+            window.panbeAnalyticsLoaded = true;
+            var s = document.createElement('script');
+            s.async = true;
+            s.src = 'https://www.googletagmanager.com/gtag/js?id=G-JHD02FRXD5';
+            document.head.appendChild(s);
+            gtag('js', new Date());
+            gtag('config', 'G-JHD02FRXD5');
+        };
+
+        if (/(?:^|;\s*)panbe_consent=v1\.granted(?:;|$)/.test(document.cookie)) {
+            window.panbeLoadAnalytics();
+        }
     </script>
 
     <?php
