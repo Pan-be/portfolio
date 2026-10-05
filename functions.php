@@ -84,6 +84,20 @@ function panbe_document_title_separator($sep)
     $sep = esc_html('|');
     return $sep;
 }
+// Front page: short per-language title instead of "site name | full tagline" (95+ chars, cut off in search results).
+add_filter('document_title_parts', 'panbe_front_page_title_parts');
+function panbe_front_page_title_parts($parts)
+{
+    if (!is_front_page()) {
+        return $parts;
+    }
+    $parts['title'] = my_theme_is_polish()
+        ? 'Strony internetowe, sklepy i aplikacje web'
+        : 'Websites, E-commerce & Web Apps';
+    $parts['site'] = get_bloginfo('name');
+    unset($parts['tagline']);
+    return $parts;
+}
 add_filter('the_title', 'panbe_title');
 function panbe_title($title)
 {
