@@ -3,9 +3,9 @@
 
 <head>
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JHD02FRXD5"></script>
-    <script>
+    <!-- Google tag (gtag.js): inert until CookieYes gets consent for the Analytics category -->
+    <script type="text/plain" data-cookieyes="cookieyes-analytics" async src="https://www.googletagmanager.com/gtag/js?id=G-JHD02FRXD5"></script>
+    <script type="text/plain" data-cookieyes="cookieyes-analytics">
         window.dataLayer = window.dataLayer || [];
 
         function gtag() {
