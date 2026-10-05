@@ -9,8 +9,9 @@
 
     ));
     ?>
-    <p>Copyright &#169; by Pan.Be <?php echo date('Y'); ?></p>
+    <p>Copyright &#169; by Pan.Be <?php echo date('Y'); ?> · <button type="button" class="consent-settings"><?php echo my_theme_is_polish() ? 'Ustawienia cookies' : 'Cookie settings'; ?></button></p>
 </footer>
+<?php get_template_part('consent'); ?>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const copyButtons = document.querySelectorAll('.copy-btn');

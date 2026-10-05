@@ -1,0 +1,65 @@
+@use '../util/' as u;
+
+.consent {
+    position: fixed;
+    inset-inline: u.rem(16);
+    bottom: u.rem(16);
+    z-index: 1000;
+    display: grid;
+    gap: u.rem(12);
+    max-width: u.rem(560);
+    padding: u.rem(20) u.rem(24);
+    background-color: var(--color-accent2);
+    color: var(--color-text);
+    border: 1px solid var(--color-accent);
+    border-radius: 12px;
+    box-shadow: 0 8px 24px hsl(0 0% 0% / .4);
+
+    @include u.breakpoint(medium) {
+        inset-inline: auto u.rem(24);
+        bottom: u.rem(24);
+    }
+
+    &[hidden] {
+        display: none;
+    }
+
+    &__title {
+        margin: 0;
+        font-weight: 700;
+    }
+
+    &__text {
+        margin: 0;
+        font-size: u.rem(14);
+
+        & a {
+            color: var(--color-accent);
+            text-decoration: underline;
+        }
+    }
+
+    // Accept and Reject look the same on purpose: refusing must be as easy as agreeing.
+    &__buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: u.rem(12);
+
+        & .button {
+            flex: 1;
+        }
+    }
+}
+
+.consent-settings {
+    padding: 0;
+    background: none;
+    border: none;
+    color: var(--color-text);
+    font: inherit;
+    cursor: pointer;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
