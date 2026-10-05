@@ -775,6 +775,9 @@ footer .bottom__nav-item a:hover {
   .pricing__element:last-child {
     border-right: none;
   }
+  .pricing__element:not(:first-child) .pricing__empty {
+    display: none;
+  }
 }
 .pricing__features {
   flex-grow: 1;
@@ -786,6 +789,8 @@ footer .bottom__nav-item a:hover {
 }
 .pricing__plan {
   display: grid;
+  justify-items: center;
+  text-align: center;
 }
 .pricing__plan h3, .pricing__plan .very-small {
   text-transform: lowercase;
@@ -795,6 +800,7 @@ footer .bottom__nav-item a:hover {
 .pricing__plan h3 {
   font-size: 1.75rem;
   font-size: clamp(1.75rem, 1.5227272727rem + 0.9696969697vw, 2.25rem);
+  white-space: nowrap;
 }
 .pricing__plan, .pricing__empty {
   flex: 1;
