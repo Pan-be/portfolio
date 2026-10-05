@@ -322,8 +322,9 @@ function custom_cf7_ajax_submit()
             'message' => $result['message']
         ]);
     } else {
+        // Pass CF7's real status (validation_failed, spam, mail_failed, ...): they share one generic message.
         wp_send_json_error([
-            'status' => 'validation_failed',
+            'status' => $result['status'],
             'message' => $result['message']
         ]);
     }

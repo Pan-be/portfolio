@@ -140,6 +140,22 @@
                         const oldForm = form.cloneNode(true);
                         form.parentNode.replaceChild(oldForm, form);
 
+                        // The form is injected after page load, so Turnstile's automatic scan never sees it:
+                        // render the widget by hand, otherwise CF7 gets no token and rejects the message as spam.
+                        let turnstileId = null;
+                        const turnstileBox = oldForm.querySelector('.cf-turnstile');
+                        if (turnstileBox && window.turnstile) {
+                            const d = turnstileBox.dataset;
+                            const params = {
+                                sitekey: d.sitekey,
+                                'response-field-name': d.responseFieldName
+                            };
+                            ['action', 'appearance', 'size', 'theme', 'language'].forEach(key => {
+                                if (d[key]) params[key] = d[key];
+                            });
+                            turnstileId = turnstile.render(turnstileBox, params);
+                        }
+
                         oldForm.addEventListener('submit', function(e) {
                             e.preventDefault();
                             const formData = new FormData(this);
@@ -227,6 +243,10 @@
                                         'Wystąpił błąd podczas wysyłania formularza';
                                     responseContainer.className =
                                         'wpcf7-response-output wpcf7-validation-errors';
+                                })
+                                .finally(() => {
+                                    // A Turnstile token is single-use: get a fresh one for the next attempt.
+                                    if (turnstileId !== null) turnstile.reset(turnstileId);
                                 });
                         });
                     }
