@@ -297,6 +297,62 @@ function my_theme_is_english()
     return my_theme_get_current_language() == 'en';
 }
 
+// REST API: the homepage and pricing templates build their text from ACF fields, so
+// content.rendered was almost empty. Render the same sections there (view context only).
+add_filter('rest_prepare_page', 'panbe_rest_acf_content', 10, 3);
+function panbe_rest_acf_content($response, $page, $request)
+{
+    if ($request['context'] === 'edit') {
+        return $response;
+    }
+
+    // Same template the front end uses: assigned template, else page-{slug}.php.
+    $template = get_page_template_slug($page) ?: 'page-' . $page->post_name . '.php';
+    $parts = array(
+        'page-panbe-homepage.php' => 'homepage',
+        'page-pricing.php' => 'pricing',
+    );
+    if (!isset($parts[$template])) {
+        return $response;
+    }
+
+    global $wp_query, $post;
+    $saved_query = $wp_query;
+    $saved_post = $post;
+
+    // Render in the page's own language (my_theme_is_polish() reads the current language).
+    $saved_lang = null;
+    if (function_exists('PLL') && function_exists('pll_get_post_language')) {
+        $saved_lang = PLL()->curlang;
+        $page_lang = PLL()->model->get_language(pll_get_post_language($page->ID));
+        if ($page_lang) {
+            PLL()->curlang = $page_lang;
+        }
+    }
+
+    $wp_query = new WP_Query(array('page_id' => $page->ID));
+    ob_start();
+    while ($wp_query->have_posts()) {
+        $wp_query->the_post();
+        get_template_part('content', $parts[$template]);
+    }
+    $html = ob_get_clean();
+
+    $wp_query = $saved_query;
+    $post = $saved_post;
+    if ($post) {
+        setup_postdata($post);
+    }
+    if (function_exists('PLL')) {
+        PLL()->curlang = $saved_lang;
+    }
+
+    $data = $response->get_data();
+    $data['content']['rendered'] = $html;
+    $response->set_data($data);
+    return $response;
+}
+
 // Dodaj obsługę AJAX dla Contact Form 7
 add_action('wp_ajax_nopriv_cf7_ajax_submit', 'custom_cf7_ajax_submit');
 add_action('wp_ajax_cf7_ajax_submit', 'custom_cf7_ajax_submit');
