@@ -42,6 +42,12 @@
   box-sizing: border-box;
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
 body {
   margin: 0;
   background: var(--color-bg);
@@ -292,6 +298,11 @@ li {
   display: grid;
   gap: 10px;
 }
+.hero__text h1 {
+  font-size: 2rem;
+  font-size: clamp(2rem, 1.6022727273rem + 1.696969697vw, 2.875rem);
+  line-height: 1.15;
+}
 @media (width >= 43.75em) {
   .hero__text {
     gap: 30px;
@@ -354,6 +365,12 @@ li {
   background: var(--color-accent2-hover);
 }
 
+.projects {
+  scroll-margin-top: 20px;
+}
+.projects > h2 {
+  margin-block-end: 32px;
+}
 .projects__list {
   display: grid;
   gap: 48px;

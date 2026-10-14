@@ -1,6 +1,12 @@
 @use '../util/' as u;
 
 .projects {
+    scroll-margin-top: 20px;
+
+    > h2 {
+        margin-block-end: 32px;
+    }
+
     &__list {
         display: grid;
         gap: 48px;
