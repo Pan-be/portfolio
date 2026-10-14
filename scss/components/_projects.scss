@@ -51,26 +51,32 @@
         font-weight: 700;
     }
 
-    &__quote {
+    &__review {
+        display: grid;
+        gap: 6px;
         margin: 0 0 1.5rem;
         padding: 1rem 1.25rem;
+        max-width: 50ch;
         border-left: 3px solid var(--color-accent);
         background: var(--color-accent2);
         border-radius: 0 12px 12px 0;
+        color: inherit;
+        transition: background 150ms ease-in-out;
 
-        blockquote {
-            margin: 0 0 0.5rem;
+        span:not(.stars) {
             font-style: italic;
         }
 
-        figcaption {
-            font-size: 0.875em;
-            opacity: 0.85;
+        &:hover,
+        &:focus-visible {
+            background: var(--color-accent2-hover);
         }
+    }
 
-        a {
-            color: var(--color-accent);
-        }
+    &__review-more {
+        color: var(--color-accent);
+        font-weight: 700;
+        font-style: normal !important;
     }
 
     &--own {

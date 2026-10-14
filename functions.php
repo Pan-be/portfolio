@@ -404,3 +404,39 @@ function custom_cf7_ajax_submit()
 
 add_filter('wpcf7_load_js', '__return_true');
 add_filter('wpcf7_load_css', '__return_true');
+
+// Star rating for reviews, e.g. ★★★★★ with a text label for screen readers.
+function panbe_stars($rating)
+{
+    $rating = max(0, min(5, (int) $rating));
+    $label = my_theme_is_polish() ? sprintf('Ocena %d na 5', $rating) : sprintf('Rated %d out of 5', $rating);
+    return '<span class="stars" role="img" aria-label="' . esc_attr($label) . '">' . str_repeat('★', $rating) . str_repeat('☆', 5 - $rating) . '</span>';
+}
+
+// First sentence of a review, for the teaser on a project card.
+function panbe_first_sentence($text, $max = 110)
+{
+    $text = trim(preg_replace('/\s+/u', ' ', (string) $text));
+    if (preg_match('/^.+?[.!?](?=\s|$)/u', $text, $m)) {
+        $text = $m[0];
+    }
+    return mb_strlen($text) > $max ? rtrim(mb_substr($text, 0, $max - 1)) . '…' : $text;
+}
+
+// "3 opinie w Google" / "3 reviews on Google", with Polish plural forms.
+function panbe_review_count($count)
+{
+    if (!my_theme_is_polish()) {
+        return sprintf($count === 1 ? '%d review on Google' : '%d reviews on Google', $count);
+    }
+    $lastTwo = $count % 100;
+    $last = $count % 10;
+    if ($count === 1) {
+        $word = 'opinia';
+    } elseif ($last >= 2 && $last <= 4 && ($lastTwo < 12 || $lastTwo > 14)) {
+        $word = 'opinie';
+    } else {
+        $word = 'opinii';
+    }
+    return sprintf('%d %s w Google', $count, $word);
+}

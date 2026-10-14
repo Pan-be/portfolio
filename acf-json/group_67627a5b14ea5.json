@@ -126,66 +126,6 @@
             "default_value": "",
             "allow_in_bindings": 0,
             "placeholder": ""
-        },
-        {
-            "key": "field_6a0e1c2b5d202",
-            "label": "Testimonial",
-            "name": "testimonial_text",
-            "aria-label": "",
-            "type": "textarea",
-            "instructions": "Client's review (e.g. copied from Google), shown on the card.",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "maxlength": "",
-            "allow_in_bindings": 0,
-            "rows": 3,
-            "placeholder": "",
-            "new_lines": ""
-        },
-        {
-            "key": "field_6a0e1c2b5d203",
-            "label": "Testimonial author",
-            "name": "testimonial_author",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "maxlength": "",
-            "allow_in_bindings": 0,
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
-            "key": "field_6a0e1c2b5d204",
-            "label": "Testimonial link",
-            "name": "testimonial_link",
-            "aria-label": "",
-            "type": "url",
-            "instructions": "Where the review can be read, e.g. the Google review.",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "allow_in_bindings": 0,
-            "placeholder": ""
         }
     ],
     "location": [
@@ -206,5 +146,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1791976240
+    "modified": 1791981148
 }

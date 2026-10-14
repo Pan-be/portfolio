@@ -33,6 +33,14 @@
 
         <?php
         // Client work first, as large cards; own projects after it, as small tiles.
+        // Reviews sit between them; a client card gets a teaser linking to its review.
+        $testimonials = get_field('testimonials') ?: array();
+        $reviewByProject = array();
+        foreach ($testimonials as $testimonial) {
+            foreach (get_field('testimonial_projects', $testimonial->ID) ?: array() as $reviewedProject) {
+                $reviewByProject[$reviewedProject->ID] = $testimonial;
+            }
+        }
         $clientProjects = get_field('client_projects');
         if ($clientProjects): ?>
             <section class="projects wrapper" id="realizacje">
@@ -62,18 +70,13 @@
                                 <?php the_content(); ?>
 
                                 <?php
-                                $testimonial = get_field('testimonial_text');
-                                if ($testimonial):
-                                    $testimonialLink = get_field('testimonial_link'); ?>
-                                    <figure class="projects__quote">
-                                        <blockquote><?php echo esc_html($testimonial); ?></blockquote>
-                                        <figcaption>
-                                            <?php echo esc_html(get_field('testimonial_author')); ?>
-                                            <?php if ($testimonialLink): ?>
-                                                · <a href="<?php echo esc_url($testimonialLink); ?>" target="_blank" rel="noopener">Google</a>
-                                            <?php endif; ?>
-                                        </figcaption>
-                                    </figure>
+                                $review = $reviewByProject[get_the_ID()] ?? null;
+                                if ($review): ?>
+                                    <a class="projects__review" href="#opinia-<?php echo esc_attr($review->ID); ?>">
+                                        <?php echo panbe_stars((int) get_field('testimonial_rating', $review->ID)); ?>
+                                        <span>„<?php echo esc_html(panbe_first_sentence(get_field('testimonial_text', $review->ID))); ?>”</span>
+                                        <span class="projects__review-more"><?php echo my_theme_is_polish() ? 'Przeczytaj opinię' : 'Read the review'; ?> ↓</span>
+                                    </a>
                                 <?php endif; ?>
 
                                 <?php get_template_part('project-buttons'); ?>
@@ -83,6 +86,47 @@
                 </div>
 
                 <?php wp_reset_postdata(); ?>
+            </section>
+        <?php endif; ?>
+
+        <?php
+        if ($testimonials):
+            $ratings = array_map(fn($t) => (int) get_field('testimonial_rating', $t->ID), $testimonials);
+            $average = array_sum($ratings) / count($ratings);
+            $allReviews = get_field('testimonials_link'); ?>
+            <section class="testimonials wrapper" id="opinie">
+                <div class="testimonials__header">
+                    <h2><?php echo esc_html(get_field('testimonials_title')); ?></h2>
+                    <p class="testimonials__summary">
+                        <?php echo panbe_stars((int) round($average)); ?>
+                        <strong><?php echo esc_html(number_format_i18n($average, 1)); ?></strong>
+                        · <?php echo esc_html(panbe_review_count(count($testimonials))); ?>
+                        <?php if ($allReviews): ?>
+                            · <a href="<?php echo esc_url($allReviews['url']); ?>" target="_blank" rel="noopener"><?php echo esc_html($allReviews['title']); ?></a>
+                        <?php endif; ?>
+                    </p>
+                </div>
+
+                <ul class="testimonials__list">
+                    <?php foreach ($testimonials as $testimonial):
+                        $company = get_field('testimonial_company', $testimonial->ID);
+                        $date = get_field('testimonial_date', $testimonial->ID);
+                        $link = get_field('testimonial_link', $testimonial->ID); ?>
+                        <li class="testimonials__item" id="opinia-<?php echo esc_attr($testimonial->ID); ?>">
+                            <?php echo panbe_stars((int) get_field('testimonial_rating', $testimonial->ID)); ?>
+                            <blockquote><?php echo esc_html(get_field('testimonial_text', $testimonial->ID)); ?></blockquote>
+                            <p class="testimonials__author">
+                                <strong><?php echo esc_html(get_the_title($testimonial)); ?></strong>
+                                <?php if ($company): ?><span><?php echo esc_html($company); ?></span><?php endif; ?>
+                                <?php if ($date): ?>
+                                    <?php if ($link): ?><a href="<?php echo esc_url($link); ?>" target="_blank" rel="noopener"><?php endif; ?>
+                                    <span class="testimonials__date"><?php echo esc_html('Google · ' . date_i18n('F Y', strtotime($date))); ?></span>
+                                    <?php if ($link): ?></a><?php endif; ?>
+                                <?php endif; ?>
+                            </p>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
             </section>
         <?php endif; ?>
 

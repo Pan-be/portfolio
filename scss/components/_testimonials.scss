@@ -1,0 +1,102 @@
+@use '../util/' as u;
+
+.stars {
+    color: var(--color-accent);
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+}
+
+.testimonials {
+    scroll-margin-top: 20px;
+
+    &__header {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 12px 24px;
+        margin-block-end: 32px;
+    }
+
+    &__summary {
+        margin: 0;
+
+        a {
+            color: var(--color-accent);
+        }
+    }
+
+    // Phone: one card and a bit of the next, swiped sideways. Wider: all cards in a row.
+    &__list {
+        list-style: none;
+        margin: 0;
+        padding: 0 0 12px;
+        display: grid;
+        grid-auto-flow: column;
+        grid-auto-columns: 85%;
+        gap: 20px;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        overscroll-behavior-x: contain;
+
+        @include u.breakpoint(medium) {
+            grid-auto-flow: row;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            overflow-x: visible;
+        }
+    }
+
+    &__item {
+        scroll-snap-align: start;
+        scroll-margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        padding: 1.5rem;
+        border-radius: 12px;
+        background: var(--color-accent2);
+        border: 2px solid transparent;
+
+        blockquote {
+            margin: 0;
+            flex-grow: 1;
+            line-height: 1.5;
+        }
+
+        // Highlight the review a project card's teaser jumped to.
+        &:target {
+            border-color: var(--color-accent);
+
+            @media (prefers-reduced-motion: no-preference) {
+                animation: testimonial-flash 1.6s ease-out;
+            }
+        }
+    }
+
+    &__author {
+        margin: 0;
+        display: grid;
+        gap: 2px;
+        font-size: 0.95em;
+
+        a {
+            color: inherit;
+        }
+    }
+
+    &__date {
+        opacity: 0.75;
+        font-size: 0.875em;
+    }
+}
+
+@keyframes testimonial-flash {
+    0%,
+    40% {
+        box-shadow: 0 0 0 6px var(--color-accent);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 transparent;
+    }
+}
