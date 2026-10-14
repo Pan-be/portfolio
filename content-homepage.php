@@ -30,20 +30,6 @@
             </div>
         </section>
 
-        <?php
-        $skills = get_field('skills');
-        if ($skills): ?>
-            <section class="skills wrapper section-grid">
-                <h2><?php
-                    echo esc_html(get_field('skills_title'));
-                    ?></h2>
-                <ul class="skills__tags">
-                    <?php foreach ($skills as $skill): ?>
-                        <li class="skills__tag"><?php echo $skill; ?></li>
-                    <?php endforeach; ?>
-                </ul>
-            </section>
-        <?php endif; ?>
 
         <?php
         // Client work first, as large cards; own projects after it, as small tiles.
@@ -131,6 +117,21 @@
             </section>
         <?php endif; ?>
 
+
+        <?php
+        $skills = get_field('skills');
+        if ($skills): ?>
+            <section class="skills wrapper section-grid">
+                <h2><?php
+                    echo esc_html(get_field('skills_title'));
+                    ?></h2>
+                <ul class="skills__tags">
+                    <?php foreach ($skills as $skill): ?>
+                        <li class="skills__tag"><?php echo $skill; ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            </section>
+        <?php endif; ?>
 
         <?php
         $contactLinks = get_field('contact_links');
