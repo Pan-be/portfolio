@@ -24,6 +24,27 @@
             "new_lines": ""
         },
         {
+            "key": "field_6a0e2f3c7a107",
+            "label": "Teaser",
+            "name": "testimonial_teaser",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Optional: the sentence shown on the project card. Empty = the review's first sentence.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
             "key": "field_6a0e2f3c7a102",
             "label": "Company \/ project",
             "name": "testimonial_company",
@@ -153,5 +174,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1791981148
+    "modified": 1791983682
 }

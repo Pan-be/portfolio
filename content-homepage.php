@@ -74,7 +74,7 @@
                                 if ($review): ?>
                                     <a class="projects__review" href="#opinia-<?php echo esc_attr($review->ID); ?>">
                                         <?php echo panbe_stars((int) get_field('testimonial_rating', $review->ID)); ?>
-                                        <span>„<?php echo esc_html(panbe_first_sentence(get_field('testimonial_text', $review->ID))); ?>”</span>
+                                        <span>„<?php echo esc_html(get_field('testimonial_teaser', $review->ID) ?: panbe_first_sentence(get_field('testimonial_text', $review->ID))); ?>”</span>
                                         <span class="projects__review-more"><?php echo my_theme_is_polish() ? 'Przeczytaj opinię' : 'Read the review'; ?> ↓</span>
                                     </a>
                                 <?php endif; ?>
