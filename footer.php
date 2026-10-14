@@ -50,47 +50,6 @@
     });
 </script>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const carousel = document.querySelector('.carousel-content');
-        const items = document.querySelectorAll('.carousel-item');
-        const prevButton = document.querySelector('.carousel-prev');
-        const nextButton = document.querySelector('.carousel-next');
-
-        if (!carousel || !items.length || !prevButton || !nextButton) return;
-
-        let currentIndex = 0;
-
-        function updateCarousel() {
-            carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
-        }
-
-        function goToPrev() {
-            if (currentIndex > 0) {
-                currentIndex--;
-                updateCarousel();
-            }
-        }
-
-        function goToNext() {
-            if (currentIndex < items.length - 1) {
-                currentIndex++;
-                updateCarousel();
-            }
-        }
-
-        prevButton.addEventListener('click', goToPrev);
-        nextButton.addEventListener('click', goToNext);
-
-        // Opcjonalnie: Dodaj obsługę klawiszy strzałek
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'ArrowLeft') goToPrev();
-            if (e.key === 'ArrowRight') goToNext();
-        });
-    });
-</script>
-
-
 <?php wp_footer(); ?>
 </body>
 

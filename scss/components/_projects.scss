@@ -1,6 +1,15 @@
 @use '../util/' as u;
 
 .projects {
+    &__list {
+        display: grid;
+        gap: 48px;
+
+        @include u.breakpoint(medium) {
+            gap: 64px;
+        }
+    }
+
     &__item {
         display: grid;
         gap: 16px;
@@ -27,7 +36,81 @@
 
     &__buttons {
         display: flex;
+        flex-wrap: wrap;
         gap: 20px;
+    }
+
+    &__scope {
+        color: var(--color-accent);
+        font-weight: 700;
+    }
+
+    &__quote {
+        margin: 0 0 1.5rem;
+        padding: 1rem 1.25rem;
+        border-left: 3px solid var(--color-accent);
+        background: var(--color-accent2);
+        border-radius: 0 12px 12px 0;
+
+        blockquote {
+            margin: 0 0 0.5rem;
+            font-style: italic;
+        }
+
+        figcaption {
+            font-size: 0.875em;
+            opacity: 0.85;
+        }
+
+        a {
+            color: var(--color-accent);
+        }
+    }
+
+    &--own {
+        padding-block-start: 2rem;
+    }
+
+    &__tiles {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        gap: 20px;
+
+        @include u.breakpoint(medium) {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+    }
+
+    &__tile {
+        display: grid;
+        gap: 12px;
+        align-content: start;
+        padding: 1.25rem;
+        border: 2px solid var(--color-accent2);
+        border-radius: 12px;
+
+        h3 {
+            margin: 0;
+            font-size: u.rem(22);
+        }
+
+        .projects__scope {
+            margin: 0;
+        }
+
+        .projects__buttons {
+            gap: 12px;
+            margin-block-start: auto;
+        }
+    }
+
+    &__more {
+        display: inline-block;
+        margin-block-start: 24px;
+        color: var(--color-accent);
+        font-weight: 700;
     }
 
     &__text {
@@ -35,60 +118,3 @@
     }
 }
 
-.carousel {
-    position: relative;
-    max-width: 1200px;
-    margin: 0 auto;
-    overflow: hidden;
-
-    &-content {
-        display: flex;
-        transition: transform 0.3s ease-in-out;
-        align-items: center;
-    }
-
-    &-item {
-        flex: 0 0 100%;
-        min-width: 100%;
-        height: auto;
-    }
-
-    &-prev,
-    &-next {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        background: rgba(0, 0, 0, 0.5);
-        color: white;
-        border: none;
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        cursor: pointer;
-        z-index: 10;
-        font-size: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        &:hover {
-            background: rgba(0, 0, 0, 0.7);
-        }
-    }
-
-    &-prev {
-        left: 1rem;
-
-        @include u.breakpoint-down(medium) {
-            left: -1rem;
-        }
-    }
-
-    &-next {
-        right: 1rem;
-
-        @include u.breakpoint-down(medium) {
-            right: -1rem;
-        }
-    }
-}
