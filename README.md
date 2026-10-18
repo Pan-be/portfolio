@@ -30,7 +30,8 @@ acf-json/                 ACF field group definitions (ACF Local JSON)
 
 - **Staging:** a Docker WordPress instance on my home server with the same WordPress and PHP versions as production. This repo is mounted into it as the theme directory.
 - **SCSS** is compiled locally and the compiled `scss/style.css` is committed, so deployment doesn't need a build step.
-- **Deploy:** the hosting pulls this repository into the theme directory. Content (pages, posts, uploads) lives in the production database and isn't part of this repo. ACF field definitions are versioned in `acf-json/`.
+- **Deploy:** the hosting pulls this repository into the theme directory. ACF field definitions are versioned in `acf-json/`.
+- **Content** (pages, posts, uploads) isn't part of this repo. It is edited on staging and published with `tools/publish.sh`: it backs up the production database, copies the staging one over with the domain and table prefix rewritten, and adds new uploads. Without `--apply` it is a dry run; `--rollback <backup>` restores a backup. The folder is deployed with the theme but blocked from the web (`.htaccess`).
 
 ## Credits
 

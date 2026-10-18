@@ -1,0 +1,9 @@
+# Copy to tools/publish.conf (untracked) and fill in.
+SSH_HOST=hostinger-panbe                      # alias from ~/.ssh/config
+REMOTE_PATH=domains/pan-be.com/public_html    # site directory on production
+PROD_URL=https://pan-be.com
+STAGING_URL=https://pan-be.home.arpa
+STAGING_CONTAINER=pan-be-wp
+STAGING_NETWORK=pan-be-staging_internal
+PROD_PREFIX=vew_                              # production table prefix
+BACKUP_DIR=$HOME/backups-panbe                # production backups land here
