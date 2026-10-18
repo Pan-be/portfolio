@@ -41,7 +41,11 @@ work="$(mktemp -d)"
 tmp_net="panbe-publish-$stamp"
 tmp_db="panbe-publish-db-$stamp"
 
+# One shared SSH connection: Hostinger refuses bursts of new ones.
+ssh_cmd="ssh -o BatchMode=yes -o ControlMaster=auto -o ControlPath=$work/ssh-%C -o ControlPersist=120"
+
 cleanup() {
+  $ssh_cmd -O exit "$SSH_HOST" >/dev/null 2>&1 || true
   docker rm -f "$tmp_db" >/dev/null 2>&1 || true
   docker network rm "$tmp_net" >/dev/null 2>&1 || true
   rm -rf "$work"
@@ -52,7 +56,7 @@ say() { printf '\n== %s\n' "$*"; }
 die() { printf 'ABORT: %s\n' "$*" >&2; exit 1; }
 
 # WP-CLI on production, inside the site directory.
-prod_wp() { ssh -o BatchMode=yes "$SSH_HOST" "cd $REMOTE_PATH && wp $*"; }
+prod_wp() { $ssh_cmd "$SSH_HOST" "cd $REMOTE_PATH && wp $*"; }
 
 # WP-CLI against staging: one-off container, staging files read-only.
 staging_env() {
@@ -95,15 +99,19 @@ backup_prod() {
   say "Backing up production"
   mkdir -p "$BACKUP_DIR"
   local file="$BACKUP_DIR/prod-$stamp.sql.gz"
-  prod_wp db export - | gzip > "$file"
+  # Hostinger disables exec() for PHP, which `wp db export` needs, so call
+  # mariadb-dump directly. The DB password is read and used on the server only.
+  $ssh_cmd "$SSH_HOST" "cd $REMOTE_PATH && MYSQL_PWD=\"\$(wp config get DB_PASSWORD)\" mariadb-dump \
+    -u \"\$(wp config get DB_USER)\" -h \"\$(wp config get DB_HOST)\" --single-transaction \
+    \"\$(wp config get DB_NAME)\"" | gzip > "$file" || die "production backup failed: $file"
   zcat "$file" | tail -1 | grep -q 'Dump completed' || die "production backup looks incomplete: $file"
   echo "  $file ($(du -h "$file" | cut -f1))"
 }
 
 import_to_prod() {
   local dump="$1" remote="panbe-publish-$stamp.sql"
-  scp -q -o BatchMode=yes "$dump" "$SSH_HOST:$remote"
-  ssh -o BatchMode=yes "$SSH_HOST" "cd $REMOTE_PATH && wp db import ~/$remote; rc=\$?; rm -f ~/$remote; exit \$rc"
+  scp -q -o BatchMode=yes -o ControlPath="$work/ssh-%C" "$dump" "$SSH_HOST:$remote"
+  $ssh_cmd "$SSH_HOST" "cd $REMOTE_PATH && wp db import ~/$remote; rc=\$?; rm -f ~/$remote; exit \$rc"
 }
 
 if [[ $mode == rollback ]]; then
@@ -200,7 +208,7 @@ fi
 
 say "Uploads to add (nothing is deleted on production)"
 uploads_src="$(docker inspect "$STAGING_CONTAINER" --format '{{range .Mounts}}{{if eq .Destination "/var/www/html"}}{{.Source}}{{end}}{{end}}')/wp-content/uploads/"
-new_uploads="$(rsync -rltn --itemize-changes --exclude '.htaccess' "$uploads_src" "$SSH_HOST:$REMOTE_PATH/wp-content/uploads/" | grep '^<' || true)"
+new_uploads="$(rsync -e "$ssh_cmd" -rltn --itemize-changes --exclude '.htaccess' "$uploads_src" "$SSH_HOST:$REMOTE_PATH/wp-content/uploads/" | grep '^<' || true)"
 echo "${new_uploads:-none}" | sed 's/^/  /'
 
 if [[ $mode == dry ]]; then
@@ -211,7 +219,7 @@ fi
 backup_prod
 
 say "Publishing"
-rsync -rlt --exclude '.htaccess' "$uploads_src" "$SSH_HOST:$REMOTE_PATH/wp-content/uploads/"
+rsync -e "$ssh_cmd" -rlt --exclude '.htaccess' "$uploads_src" "$SSH_HOST:$REMOTE_PATH/wp-content/uploads/"
 echo "  uploads copied"
 import_to_prod "$work/publish.sql"
 purge_caches
