@@ -83,6 +83,23 @@
             "allow_in_bindings": 0
         },
         {
+            "key": "field_6a0e1c2b5d101",
+            "label": "CTA Button (secondary)",
+            "name": "cta_button_secondary",
+            "aria-label": "",
+            "type": "link",
+            "instructions": "Optional second button, e.g. a link to #realizacje.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "allow_in_bindings": 0
+        },
+        {
             "key": "field_676129658120e",
             "label": "Hero Image",
             "name": "hero_image",
@@ -148,20 +165,26 @@
                 "CSS": "CSS",
                 "Sass\/SCSS": "Sass\/SCSS",
                 "Tailwind CSS": "Tailwind CSS",
+                "Bootstrap": "Bootstrap",
                 "JavaScript": "JavaScript",
                 "TypeScript": "TypeScript",
                 "React": "React",
-                "Context API": "Context API",
-                "TypeScript w React": "TypeScript w React",
-                "Vite": "Vite",
-                "Vitest": "Vitest",
-                "WordPress (Elementor, Polylang, WooCommerce)": "WordPress (Elementor, Polylang, WooCommerce)",
+                "Next.js": "Next.js",
+                "WordPress (własne motywy)": "WordPress (własne motywy)",
+                "ACF": "ACF",
+                "WooCommerce": "WooCommerce",
                 "PHP": "PHP",
                 "Symfony": "Symfony",
-                "Next.js": "Next.js",
-                "Git": "Git",
-                "SVN": "SVN",
-                "Figma": "Figma"
+                "MySQL": "MySQL",
+                "REST API": "REST API",
+                "Git \/ SVN": "Git \/ SVN",
+                "Docker": "Docker",
+                "Figma": "Figma",
+                "SEO techniczne": "SEO techniczne",
+                "Integracje AI": "Integracje AI",
+                "WordPress (custom themes)": "WordPress (custom themes)",
+                "Technical SEO": "Technical SEO",
+                "AI integrations": "AI integrations"
             },
             "default_value": [],
             "return_format": "value",
@@ -173,9 +196,9 @@
             "custom_choice_button_text": "Add new choice"
         },
         {
-            "key": "field_67627cad1cc33",
-            "label": "Projects Title",
-            "name": "projects_title",
+            "key": "field_6a0e1c2b5d102",
+            "label": "Client Projects Title",
+            "name": "client_projects_title",
             "aria-label": "",
             "type": "text",
             "instructions": "",
@@ -194,12 +217,12 @@
             "append": ""
         },
         {
-            "key": "field_67627e543079b",
-            "label": "Projects",
-            "name": "projects",
+            "key": "field_6a0e1c2b5d103",
+            "label": "Client Projects",
+            "name": "client_projects",
             "aria-label": "",
             "type": "relationship",
-            "instructions": "",
+            "instructions": "Client work, shown first as large cards.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -222,6 +245,142 @@
             "elements": "",
             "bidirectional": 0,
             "bidirectional_target": []
+        },
+        {
+            "key": "field_6a0e2f3c7a201",
+            "label": "Testimonials Title",
+            "name": "testimonials_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_6a0e2f3c7a202",
+            "label": "Testimonials",
+            "name": "testimonials",
+            "aria-label": "",
+            "type": "relationship",
+            "instructions": "Shown after the client work, in this order.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "testimonial"
+            ],
+            "post_status": [
+                "publish"
+            ],
+            "taxonomy": "",
+            "filters": "",
+            "return_format": "object",
+            "min": "",
+            "max": "",
+            "allow_in_bindings": 0,
+            "elements": "",
+            "bidirectional": 0,
+            "bidirectional_target": []
+        },
+        {
+            "key": "field_6a0e2f3c7a203",
+            "label": "Testimonials: all reviews link",
+            "name": "testimonials_link",
+            "aria-label": "",
+            "type": "link",
+            "instructions": "Optional, e.g. the Google profile.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "allow_in_bindings": 0
+        },
+        {
+            "key": "field_67627cad1cc33",
+            "label": "Own Projects Title",
+            "name": "projects_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_67627e543079b",
+            "label": "Own Projects",
+            "name": "projects",
+            "aria-label": "",
+            "type": "relationship",
+            "instructions": "Own projects, shown as small tiles under the client work.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "portfolio-project"
+            ],
+            "post_status": [
+                "publish"
+            ],
+            "taxonomy": "",
+            "filters": "",
+            "return_format": "object",
+            "min": "",
+            "max": "",
+            "allow_in_bindings": 0,
+            "elements": "",
+            "bidirectional": 0,
+            "bidirectional_target": []
+        },
+        {
+            "key": "field_6a0e1c2b5d104",
+            "label": "Own Projects: more link",
+            "name": "projects_more_link",
+            "aria-label": "",
+            "type": "link",
+            "instructions": "Optional link under the tiles, e.g. GitHub.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "allow_in_bindings": 0
         },
         {
             "key": "field_67633189ff755",
@@ -300,5 +459,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1791069331
+    "modified": 1791981148
 }

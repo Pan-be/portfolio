@@ -29,6 +29,27 @@
             "preview_size": "medium"
         },
         {
+            "key": "field_6a0e1c2b5d201",
+            "label": "Scope",
+            "name": "project_scope",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "One line under the title: client type, place, what was done.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
             "key": "field_67627a8196e30",
             "label": "Website Button Text",
             "name": "website_button_text",
@@ -125,5 +146,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1791062048
+    "modified": 1791981148
 }

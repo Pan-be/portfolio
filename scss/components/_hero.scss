@@ -25,6 +25,13 @@
     &__text {
 
         display: grid;
+
+        // The H1 is a full sentence, so smaller than the global 48-64 px
+        h1 {
+            @include u.fs-fluid(u.rem(375), u.rem(1200), u.rem(32), u.rem(46));
+            line-height: 1.15;
+        }
+
         gap: 10px;
 
         @include u.breakpoint(medium) {
@@ -38,6 +45,12 @@
         p:last-child {
             margin-block-end: 0;
         }
+    }
+
+    &__buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
     }
 
     &__image {
