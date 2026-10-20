@@ -440,3 +440,63 @@ function panbe_review_count($count)
     }
     return sprintf('%d %s w Google', $count, $word);
 }
+
+// Blog: posts in the "for salons" category lead the posts page; the rest go to a smaller list below it.
+function panbe_salon_category()
+{
+    foreach (array('dla-salonow', 'for-salons') as $slug) {
+        $term = get_term_by('slug', $slug, 'category');
+        if ($term && (!function_exists('pll_get_term_language') || pll_get_term_language($term->term_id) === my_theme_get_current_language())) {
+            return $term;
+        }
+    }
+    return null;
+}
+
+// "5 min czytania" / "5 min read", at about 200 words a minute.
+function panbe_reading_time($post = null)
+{
+    $text = wp_strip_all_tags(strip_shortcodes(get_post_field('post_content', $post)));
+    $words = count(preg_split('/\s+/u', trim($text), -1, PREG_SPLIT_NO_EMPTY));
+    $minutes = max(1, (int) round($words / 200));
+    return my_theme_is_polish() ? sprintf('%d min czytania', $minutes) : sprintf('%d min read', $minutes);
+}
+
+// Contact page in the current language (PL /kontakt/, EN its Polylang translation).
+function panbe_contact_url()
+{
+    $page = get_page_by_path('kontakt');
+    if (!$page) {
+        return home_url('/');
+    }
+    if (function_exists('pll_get_post') && pll_get_post($page->ID)) {
+        return get_permalink(pll_get_post($page->ID));
+    }
+    return get_permalink($page);
+}
+
+// WordPress prints a canonical only on single posts and pages; add one for the posts page.
+add_action('wp_head', 'panbe_blog_canonical');
+function panbe_blog_canonical()
+{
+    if (!is_home() || is_front_page()) {
+        return;
+    }
+    $url = get_permalink(get_option('page_for_posts'));
+    $paged = (int) get_query_var('paged');
+    if ($paged > 1) {
+        $url = trailingslashit($url) . user_trailingslashit('page/' . $paged, 'paged');
+    }
+    echo '<link rel="canonical" href="' . esc_url($url) . '">' . "\n";
+}
+
+// The PL posts page moved from /blog-2/ to /porady/ (2026-10). Pages keep no old-slug record, so redirect by hand.
+add_action('template_redirect', 'panbe_old_blog_slug_redirect', 1);
+function panbe_old_blog_slug_redirect()
+{
+    $path = trim((string) wp_parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH), '/');
+    if ($path === 'blog-2' || str_starts_with($path, 'blog-2/')) {
+        wp_safe_redirect(home_url(user_trailingslashit('/porady' . substr($path, strlen('blog-2')))), 301);
+        exit;
+    }
+}

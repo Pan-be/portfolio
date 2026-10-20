@@ -22,6 +22,27 @@
             "placeholder": "",
             "prepend": "",
             "append": ""
+        },
+        {
+            "key": "field_6714b10c0a1e2",
+            "label": "Blog Intro",
+            "name": "blog_intro",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Short text under the posts page heading.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "rows": 3,
+            "placeholder": "",
+            "new_lines": ""
         }
     ],
     "location": [
@@ -42,5 +63,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1791061979
+    "modified": 1792421525
 }

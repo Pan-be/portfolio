@@ -1,0 +1,346 @@
+@use '../util/' as u;
+
+// Posts page and single post (not .blog: WordPress puts that class on <body> of the posts page). Links here are plain (no italics from .page-wrapper), headings stay sentence case.
+.panbe-blog {
+    display: grid;
+    gap: 56px;
+
+    @include u.breakpoint(large) {
+        gap: 64px;
+    }
+
+    a {
+        color: var(--color-text);
+    }
+
+    h2 {
+        @include u.fs-fluid(u.rem(375), u.rem(1200), u.rem(24), u.rem(32));
+        line-height: 1.2;
+    }
+
+    h3 {
+        letter-spacing: 0;
+        text-transform: none;
+    }
+
+    &__intro {
+        display: grid;
+        gap: 16px;
+        max-width: 760px;
+
+        h1 {
+            @include u.fs-fluid(u.rem(375), u.rem(1200), u.rem(32), u.rem(46));
+            line-height: 1.15;
+        }
+    }
+
+    &__eyebrow {
+        margin: 0;
+        color: var(--color-accent);
+        font-weight: 700;
+        font-size: u.rem(14);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
+
+    &__lead {
+        margin: 0;
+        @include u.fs-fluid(u.rem(375), u.rem(1200), u.rem(16), u.rem(20));
+    }
+
+    &__more {
+        display: grid;
+        gap: 28px;
+    }
+
+    &__grid {
+        display: grid;
+        gap: 24px;
+        grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+    }
+
+    &__cta {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        padding: clamp(24px, 4vw, 40px);
+        border: 3px solid var(--color-accent);
+        border-radius: 16px;
+
+        &--post {
+            padding: 28px;
+        }
+    }
+
+    &__cta-text {
+        display: grid;
+        gap: 10px;
+        flex: 1 1 420px;
+
+        p {
+            margin: 0;
+        }
+    }
+
+    &__cta-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    &__dev {
+        display: grid;
+        gap: 12px;
+        padding-block-start: 40px;
+        border-top: 2px solid var(--color-accent2);
+
+        h2 {
+            font-size: u.rem(22);
+        }
+
+        > p {
+            margin: 0;
+            opacity: 0.8;
+        }
+    }
+
+    &__dev-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        li {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 4px 24px;
+            max-width: none;
+            padding-block: 14px;
+            border-bottom: 1px solid var(--color-accent2);
+        }
+
+        a {
+            font-weight: 700;
+
+            &:hover {
+                color: var(--color-accent);
+            }
+        }
+
+        time {
+            font-size: u.rem(14);
+            opacity: 0.8;
+        }
+    }
+
+    &--single {
+        justify-items: center;
+        gap: 48px;
+    }
+}
+
+.blog-card {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 16px;
+    border: 2px solid var(--color-accent2);
+    border-radius: 12px;
+
+    &__image {
+        display: block;
+
+        img {
+            display: block;
+            width: 100%;
+            height: auto;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+    }
+
+    &__body {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        gap: 14px;
+    }
+
+    &__tag {
+        align-self: flex-start;
+        justify-self: start;
+        padding: 3px 10px;
+        border-radius: 60px;
+        background: var(--color-accent);
+        color: var(--color-bg);
+        font-size: u.rem(13);
+        font-weight: 700;
+    }
+
+    &__title {
+        font-size: u.rem(22);
+        line-height: 1.25;
+
+        a:hover {
+            color: var(--color-accent);
+        }
+    }
+
+    &__excerpt {
+        margin: 0;
+        opacity: 0.88;
+    }
+
+    &__meta {
+        margin: auto 0 0;
+        font-size: u.rem(14);
+        opacity: 0.8;
+    }
+
+    &__button {
+        align-self: flex-start;
+    }
+
+    &--featured {
+        display: grid;
+        gap: 32px;
+        align-items: center;
+        padding: 24px;
+        border: 0;
+        border-radius: 16px;
+        background: var(--color-accent2);
+
+        &:not(.blog-card--no-image) {
+            @include u.breakpoint(medium) {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        .blog-card__title {
+            @include u.fs-fluid(u.rem(375), u.rem(1200), u.rem(26), u.rem(34));
+            line-height: 1.2;
+        }
+
+        .blog-card__image img {
+            aspect-ratio: 16 / 10;
+            border-radius: 12px;
+        }
+
+        .blog-card__meta {
+            margin: 0;
+        }
+    }
+}
+
+.blog-post {
+    display: grid;
+    gap: 28px;
+    width: 100%;
+    max-width: 760px;
+
+    &__crumbs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        font-size: u.rem(14);
+        opacity: 0.8;
+
+        a {
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+    }
+
+    &__header {
+        display: grid;
+        gap: 16px;
+
+        h1 {
+            @include u.fs-fluid(u.rem(375), u.rem(1200), u.rem(32), u.rem(46));
+            line-height: 1.15;
+        }
+
+        .blog-card__meta {
+            margin: 0;
+        }
+    }
+
+    &__image img {
+        display: block;
+        width: 100%;
+        height: auto;
+        border-radius: 12px;
+    }
+
+    &__content {
+        font-size: u.rem(18);
+        line-height: 1.7;
+
+        > * {
+            margin-block: 0 20px;
+        }
+
+        p,
+        li {
+            max-width: none;
+            line-height: 1.7;
+        }
+
+        h2 {
+            margin-block-start: 44px;
+        }
+
+        h3 {
+            margin-block-start: 32px;
+            font-size: u.rem(22);
+            line-height: 1.3;
+        }
+
+        ul,
+        ol {
+            padding-left: 1.4em;
+        }
+
+        li + li {
+            margin-block-start: 8px;
+        }
+
+        a {
+            color: var(--color-accent);
+            text-decoration: underline;
+            text-underline-offset: 3px;
+
+            &:hover {
+                color: var(--color-text);
+            }
+        }
+
+        blockquote {
+            margin-inline: 0;
+            padding: 20px 24px;
+            border-radius: 12px;
+            background: var(--color-accent2);
+        }
+
+        img {
+            height: auto;
+            border-radius: 12px;
+        }
+    }
+
+    &__related {
+        width: 100%;
+        padding-block-start: 40px;
+        border-top: 2px solid var(--color-accent2);
+    }
+
+    // a.class: beats `.panbe-blog a`, which comes earlier with the same specificity.
+    a#{&}__back {
+        justify-self: start;
+        font-weight: 700;
+        color: var(--color-accent);
+    }
+}
