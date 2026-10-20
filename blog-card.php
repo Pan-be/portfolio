@@ -8,7 +8,12 @@ $panbe_salon = panbe_salon_category();
 <article id="post-<?php the_ID(); ?>" class="blog-card<?php echo $panbe_featured ? ' blog-card--featured' : ''; ?><?php echo has_post_thumbnail() ? '' : ' blog-card--no-image'; ?>">
     <?php if (has_post_thumbnail()) : ?>
         <a class="blog-card__image" href="<?php the_permalink(); ?>" tabindex="-1" aria-hidden="true">
-            <?php the_post_thumbnail($panbe_featured ? 'large' : 'medium', array('loading' => $panbe_featured ? 'eager' : 'lazy', 'alt' => '')); ?>
+            <?php // sizes = the card's real width, so phones and retina screens get the 1024 px file, not the 300 px one.
+            the_post_thumbnail('large', array(
+                'loading' => $panbe_featured ? 'eager' : 'lazy',
+                'alt' => '',
+                'sizes' => $panbe_featured ? '(min-width: 700px) 540px, calc(100vw - 88px)' : '(min-width: 700px) 380px, calc(100vw - 76px)',
+            )); ?>
         </a>
     <?php endif; ?>
     <div class="blog-card__body">
