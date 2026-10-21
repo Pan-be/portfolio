@@ -500,3 +500,22 @@ function panbe_old_blog_slug_redirect()
         exit;
     }
 }
+
+// Author archives, ?author=N and the public users endpoint all reveal the `admin` login. Send the archives home, hide the endpoint from visitors.
+add_action('template_redirect', 'panbe_author_archive_redirect', 1);
+function panbe_author_archive_redirect()
+{
+    if (is_author() || isset($_GET['author'])) {
+        wp_safe_redirect(home_url('/'), 301);
+        exit;
+    }
+}
+
+add_filter('rest_endpoints', 'panbe_hide_rest_users');
+function panbe_hide_rest_users($endpoints)
+{
+    if (!is_user_logged_in()) {
+        unset($endpoints['/wp/v2/users'], $endpoints['/wp/v2/users/(?P<id>[\d]+)']);
+    }
+    return $endpoints;
+}
