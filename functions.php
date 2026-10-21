@@ -136,7 +136,8 @@ if (!function_exists('panbe_wp_body_open')) {
 add_action('wp_body_open', 'panbe_skip_link', 5);
 function panbe_skip_link()
 {
-    echo '<a href="#content" class="skip-link screen-reader-text">' . esc_html__('Skip to the content', 'panbe') . '</a>';
+    $label = my_theme_is_polish() ? 'Przejdź do treści' : 'Skip to the content';
+    echo '<a href="#content" class="skip-link screen-reader-text">' . esc_html($label) . '</a>';
 }
 add_filter('the_content_more_link', 'panbe_read_more_link');
 function panbe_read_more_link()
@@ -475,29 +476,60 @@ function panbe_contact_url()
     return get_permalink($page);
 }
 
-// WordPress prints a canonical only on single posts and pages; add one for the posts page.
-add_action('wp_head', 'panbe_blog_canonical');
-function panbe_blog_canonical()
+// Posts page URL (with /page/N/), or '' when this isn't the posts page.
+function panbe_posts_page_url()
 {
     if (!is_home() || is_front_page()) {
-        return;
+        return '';
     }
     $url = get_permalink(get_option('page_for_posts'));
     $paged = (int) get_query_var('paged');
     if ($paged > 1) {
         $url = trailingslashit($url) . user_trailingslashit('page/' . $paged, 'paged');
     }
-    echo '<link rel="canonical" href="' . esc_url($url) . '">' . "\n";
+    return $url;
 }
 
-// The PL posts page moved from /blog-2/ to /porady/ (2026-10). Pages keep no old-slug record, so redirect by hand.
-add_action('template_redirect', 'panbe_old_blog_slug_redirect', 1);
-function panbe_old_blog_slug_redirect()
+// WordPress prints a canonical only on single posts and pages; add one for the posts page.
+add_action('wp_head', 'panbe_blog_canonical');
+function panbe_blog_canonical()
 {
+    $url = panbe_posts_page_url();
+    if ($url !== '') {
+        echo '<link rel="canonical" href="' . esc_url($url) . '">' . "\n";
+    }
+}
+
+// og:url for the page being shown. get_permalink() alone gives the first post's URL on the posts page and archives.
+function panbe_og_url()
+{
+    $url = panbe_posts_page_url();
+    if ($url !== '') {
+        return $url;
+    }
+    if (is_singular()) {
+        return wp_get_canonical_url() ?: get_permalink();
+    }
+    $path = (string) wp_parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH);
+    return home_url($path);
+}
+
+// Pages renamed in 2026-10: PL posts page /blog-2/ → /porady/, PL pricing /pricing/ → /cennik/, EN pricing /en/pricing-2/ → /en/pricing/.
+// Pages keep no old-slug record, so redirect by hand (sub-paths like /blog-2/page/2/ too).
+add_action('template_redirect', 'panbe_old_slug_redirect', 1);
+function panbe_old_slug_redirect()
+{
+    $moved = array(
+        'blog-2' => 'porady',
+        'pricing' => 'cennik',
+        'en/pricing-2' => 'en/pricing',
+    );
     $path = trim((string) wp_parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH), '/');
-    if ($path === 'blog-2' || str_starts_with($path, 'blog-2/')) {
-        wp_safe_redirect(home_url(user_trailingslashit('/porady' . substr($path, strlen('blog-2')))), 301);
-        exit;
+    foreach ($moved as $old => $new) {
+        if ($path === $old || str_starts_with($path, $old . '/')) {
+            wp_safe_redirect(home_url(user_trailingslashit('/' . $new . substr($path, strlen($old)))), 301);
+            exit;
+        }
     }
 }
 

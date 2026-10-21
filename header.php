@@ -42,7 +42,7 @@
     <meta property="og:title" content="<?php echo esc_attr($panbe_title); ?>">
     <meta property="og:description" content="<?php echo esc_attr($panbe_description); ?>">
     <meta property="og:image" content="<?php echo get_template_directory_uri(); ?>/panbe_hero.webp">
-    <meta property="og:url" content="<?php echo get_permalink(); ?>">
+    <meta property="og:url" content="<?php echo esc_url(panbe_og_url()); ?>">
     <meta property="og:type" content="website">
 
     <meta name="twitter:card" content="summary_large_image">
