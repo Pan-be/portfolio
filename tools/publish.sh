@@ -77,9 +77,15 @@ tmp_wp() {
 }
 
 check_site() {
-  local ok=0 url code
+  local ok=0 url code mitigated
   for url in "$PROD_URL/" "$PROD_URL/en/" "$PROD_URL/wp-login.php"; do
-    code="$(curl -sL -o "$work/page.html" -w '%{http_code}' "$url?nocache=$stamp")"
+    code="$(curl -sL -D "$work/headers.txt" -o "$work/page.html" -w '%{http_code}' "$url?nocache=$stamp")"
+    mitigated="$(grep -i '^cf-mitigated:' "$work/headers.txt" | tail -n 1 | tr -d '\r' | awk '{print $2}')"
+    # Cloudflare challenges wp-login.php (rule since 2026-10-19); that 403 comes from Cloudflare, not WordPress
+    if [[ $code == 403 && $mitigated == challenge ]]; then
+      echo "  $url $code  Cloudflare challenge, not WordPress: OK"
+      continue
+    fi
     if grep -q "$staging_host" "$work/page.html"; then
       echo "  $url $code  contains $staging_host"; ok=1
     else
