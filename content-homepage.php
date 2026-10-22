@@ -130,6 +130,8 @@
             </section>
         <?php endif; ?>
 
+        <?php get_template_part('ai-demo'); ?>
+
         <?php
         $projects = get_field('projects');
         if ($projects): ?>
