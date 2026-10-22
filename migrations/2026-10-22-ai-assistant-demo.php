@@ -1,6 +1,6 @@
 <?php
-// AI assistant demo on the home page (ai-demo.php, inc/chat-demo.php): privacy policy entries for it, and the
-// pricing intro now points to the AI card instead of "priced individually".
+// AI assistant demo on the home page (ai-demo.php, inc/chat-demo.php): privacy policy entries for it, the
+// pricing intro now points to the AI card instead of "priced individually", and the PL hero links to the demo.
 // Run: wp eval-file wp-content/themes/panbe/migrations/2026-10-22-ai-assistant-demo.php
 if (!defined('WP_CLI')) {
     exit;
@@ -51,4 +51,17 @@ foreach ($edits as $id => $pairs) {
         WP_CLI::error("Page $id: " . $result->get_error_message());
     }
     WP_CLI::success("Page $id updated");
+}
+
+// PL home page hero (ACF hero_text, page 159): link the AI sentence to the demo section.
+$hero_from = 'Na życzenie dokładam asystenta AI, który odpowiada klientkom 24/7.';
+$hero_to = 'Na życzenie dokładam asystenta AI, który odpowiada klientkom 24/7: <a href="#asystent-ai" data-track="ai_demo_link" data-track-location="hero">zobacz, jak działa</a>.';
+$hero = get_field('hero_text', 159, false);
+if (str_contains($hero, $hero_to)) {
+    WP_CLI::log('Hero 159: already up to date');
+} elseif (!str_contains($hero, $hero_from)) {
+    WP_CLI::error('Hero 159: expected text not found');
+} else {
+    update_field('hero_text', str_replace($hero_from, $hero_to, $hero), 159);
+    WP_CLI::success('Hero 159 updated');
 }

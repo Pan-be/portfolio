@@ -214,7 +214,7 @@
                     <p class="ai-offer__price"><span class="very-small"><?php echo $pl ? 'wdrożenie od' : 'setup from'; ?></span> <?php echo $pl ? '1990 zł' : '€490'; ?></p>
                     <p class="ai-offer__price"><span class="very-small"><?php echo $pl ? 'abonament od' : 'monthly from'; ?></span> <?php echo $pl ? '199 zł/mies.' : '€49'; ?></p>
                     <p class="very-small"><?php echo $pl ? 'Ceny netto.' : 'Prices exclude VAT.'; ?></p>
-                    <a class="button secondary" href="<?php echo esc_url((function_exists('pll_home_url') ? pll_home_url() : home_url('/')) . '#asystent-ai'); ?>"><?php echo $pl ? 'Wypróbuj demo' : 'Try the demo'; ?></a>
+                    <a class="button secondary" href="<?php echo esc_url((function_exists('pll_home_url') ? pll_home_url() : home_url('/')) . '#asystent-ai'); ?>" data-track="ai_demo_link" data-track-location="pricing"><?php echo $pl ? 'Wypróbuj demo' : 'Try the demo'; ?></a>
                     <button class="open-modal button primary" data-plan="<?php echo $pl ? 'asystent ai' : 'ai assistant'; ?>"><?php echo $pl ? 'Zapytaj o wdrożenie' : 'Ask about it'; ?></button>
                 </div>
             </div>

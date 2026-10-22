@@ -33,7 +33,14 @@
         chat.classList.toggle('chat--busy', state);
     }
 
-    async function ask(text) {
+    // GA4 event, only when the visitor accepted analytics (header.php loads GA then).
+    function track(name, params) {
+        if (window.panbeAnalyticsLoaded && window.gtag) {
+            window.gtag('event', name, params);
+        }
+    }
+
+    async function ask(text, source) {
         text = text.trim();
         if (busy || text === '') {
             return;
@@ -70,6 +77,7 @@
         } else {
             history.push({ role: 'assistant', content: reply });
             addMessage('assistant', reply);
+            track('ai_demo_message', { message_number: history.length / 2, source: source });
         }
         setBusy(false);
         input.focus();
@@ -77,14 +85,14 @@
 
     form.addEventListener('submit', function (e) {
         e.preventDefault();
-        ask(input.value);
+        ask(input.value, 'typed');
     });
 
     if (starters) {
         starters.addEventListener('click', function (e) {
             const starter = e.target.closest('button');
             if (starter) {
-                ask(starter.textContent);
+                ask(starter.textContent, 'starter');
             }
         });
     }
@@ -93,5 +101,6 @@
     const bookNote = chat.querySelector('[data-chat-book-note]');
     book.addEventListener('click', function () {
         bookNote.hidden = false;
+        track('ai_demo_book_click', {});
     });
 })();

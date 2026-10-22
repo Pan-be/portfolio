@@ -344,6 +344,10 @@ li {
 .hero__text p:last-child {
   margin-block-end: 0;
 }
+.hero__text p a {
+  color: var(--color-accent);
+  text-decoration: underline;
+}
 .hero__buttons {
   display: flex;
   flex-wrap: wrap;
