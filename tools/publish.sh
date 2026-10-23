@@ -123,6 +123,12 @@ import_to_prod() {
     \"\$(wp config get DB_NAME)\"" < "$dump" || die "production import failed"
 }
 
+# Without these checks a dead SSH key or a broken staging WP-CLI ended the run with no message.
+say "Connections"
+prod_wp option get siteurl >/dev/null \
+  || die "no WP-CLI on production over SSH: is the key unlocked in the agent that SSH_AUTH_SOCK points to?"
+echo "  production: OK"
+
 if [[ $mode == rollback ]]; then
   [[ -f $restore_file ]] || die "no such file: $restore_file"
   backup_prod
@@ -137,6 +143,8 @@ if [[ $mode == rollback ]]; then
 fi
 
 say "Preflight"
+staging_wp option get siteurl >/dev/null \
+  || die "WP-CLI on staging fails: does $CLI_IMAGE match staging's PHP version? (try: CLI_IMAGE=wordpress:cli-php<version>)"
 [[ "$(prod_wp db prefix)" == "$PROD_PREFIX" ]] || die "production table prefix is not $PROD_PREFIX"
 staging_prefix="$(staging_wp db prefix)"
 for what in "core version" "option get db_version"; do
