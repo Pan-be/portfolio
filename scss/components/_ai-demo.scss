@@ -1,0 +1,258 @@
+@use '../util/' as u;
+
+.ai-demo {
+    scroll-margin-top: 20px;
+    display: grid;
+    gap: 32px;
+
+    @include u.breakpoint(medium) {
+        grid-template-columns: 1fr 1fr;
+        gap: 48px;
+        align-items: start;
+    }
+
+    &__text {
+        display: grid;
+        gap: 16px;
+        justify-items: start;
+
+        h2,
+        p {
+            margin: 0;
+        }
+    }
+
+    &__eyebrow {
+        color: var(--color-accent);
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        font-size: u.rem(14);
+    }
+
+    &__points {
+        margin: 0;
+        padding-inline-start: 1.25rem;
+        display: grid;
+        gap: 8px;
+        line-height: 1.5;
+
+        li::marker {
+            color: var(--color-accent);
+        }
+    }
+
+    &__price strong {
+        color: var(--color-accent);
+    }
+}
+
+.chat {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 1rem;
+    border-radius: 12px;
+    background: var(--color-accent2);
+
+    p {
+        margin: 0;
+    }
+
+    &__header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding-block-end: 12px;
+        border-bottom: 1px solid hsla(0, 0%, 100%, 0.15);
+    }
+
+    &__avatar {
+        display: grid;
+        place-items: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: var(--color-accent);
+        color: var(--color-bg);
+        font-weight: 700;
+    }
+
+    &__name {
+        font-weight: 700;
+    }
+
+    &__status {
+        font-size: u.rem(13);
+        opacity: 0.8;
+    }
+
+    &__log {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        height: 320px;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        padding-inline-end: 4px;
+    }
+
+    &__message {
+        max-width: 85%;
+        padding: 10px 14px;
+        border-radius: 14px;
+        line-height: 1.45;
+        white-space: pre-line;
+        overflow-wrap: anywhere;
+
+        &--assistant {
+            align-self: flex-start;
+            background: var(--color-bg);
+            border-bottom-left-radius: 4px;
+        }
+
+        &--user {
+            align-self: flex-end;
+            background: var(--color-accent);
+            color: var(--color-bg);
+            border-bottom-right-radius: 4px;
+        }
+
+        &--typing {
+            align-self: flex-start;
+            font-style: italic;
+            opacity: 0.7;
+        }
+
+        &--error {
+            align-self: flex-start;
+            border: 1px solid var(--color-accent);
+        }
+    }
+
+    &__starters {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+
+        &[hidden] {
+            display: none;
+        }
+    }
+
+    &__starter {
+        padding: 6px 12px;
+        border-radius: 60px;
+        border: 1px solid var(--color-accent);
+        background: none;
+        color: var(--color-text);
+        font: inherit;
+        font-size: u.rem(14);
+        cursor: pointer;
+        transition: background 150ms ease-in-out;
+
+        &:hover {
+            background: var(--color-accent2-hover);
+        }
+    }
+
+    &__form {
+        display: flex;
+        gap: 8px;
+    }
+
+    &__input {
+        flex: 1;
+        min-width: 0;
+        padding: 10px 16px;
+        border-radius: 60px;
+        border: 1px solid hsla(0, 0%, 100%, 0.3);
+        background: var(--color-bg);
+        color: var(--color-text);
+        font: inherit;
+
+        &:focus-visible {
+            outline: 2px solid var(--color-accent);
+            outline-offset: 1px;
+        }
+    }
+
+    // Honeypot: off-screen for people, still filled in by naive bots.
+    &__trap {
+        position: absolute;
+        left: -9999px;
+        width: 1px;
+        height: 1px;
+    }
+
+    &__send:disabled,
+    &__input:disabled {
+        opacity: 0.6;
+        cursor: wait;
+    }
+
+    &__footer {
+        display: grid;
+        gap: 8px;
+        justify-items: start;
+    }
+
+    &__note,
+    &__privacy,
+    &__off {
+        font-size: u.rem(13);
+        opacity: 0.8;
+    }
+}
+
+// Pricing page card for the same add-on.
+.ai-offer {
+    scroll-margin-top: 20px;
+
+    &__card {
+        display: grid;
+        gap: 32px;
+        padding: 1.5rem;
+        border-radius: 12px;
+        border: 2px solid var(--color-accent);
+
+        @include u.breakpoint(medium) {
+            grid-template-columns: 2fr 1fr;
+            gap: 48px;
+            padding: 2.5rem;
+        }
+    }
+
+    &__text {
+        display: grid;
+        gap: 16px;
+
+        h2,
+        p {
+            margin: 0;
+        }
+    }
+
+    &__prices {
+        display: grid;
+        gap: 12px;
+        align-content: center;
+        justify-items: start;
+
+        p {
+            margin: 0;
+        }
+    }
+
+    &__price {
+        font-size: u.rem(28);
+        font-weight: 700;
+        color: var(--color-accent);
+
+        .very-small {
+            display: block;
+            color: var(--color-text);
+            font-weight: 400;
+        }
+    }
+}

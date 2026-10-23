@@ -44,3 +44,12 @@ btnClose.addEventListener('click', closeMobileMenu);
 media.addEventListener('change', function (e) {
     setupTopNav(e);
 })
+
+// GA4 events for links marked data-track="<event>" (data-track-location says where the link sits).
+// Sent only when the visitor accepted analytics (header.php loads GA then).
+document.addEventListener('click', function (e) {
+    const link = e.target.closest('[data-track]');
+    if (link && window.panbeAnalyticsLoaded && window.gtag) {
+        window.gtag('event', link.dataset.track, { link_location: link.dataset.trackLocation || '' });
+    }
+});

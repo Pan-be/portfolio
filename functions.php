@@ -1,4 +1,6 @@
 <?php
+require_once get_template_directory() . '/inc/chat-demo.php';
+
 add_action('after_setup_theme', 'panbe_setup');
 function panbe_setup()
 {
@@ -45,6 +47,9 @@ function panbe_enqueue()
     wp_enqueue_style('panbe-style', get_stylesheet_directory_uri() . '/scss/style.css', array(), filemtime(get_stylesheet_directory() . '/scss/style.css'));
     wp_enqueue_script('panbe-script', get_stylesheet_directory_uri() . '/js/script.js', array(), filemtime(get_stylesheet_directory() . '/js/script.js'), true);
     wp_enqueue_script('panbe-consent', get_stylesheet_directory_uri() . '/js/consent.js', array(), filemtime(get_stylesheet_directory() . '/js/consent.js'), true);
+    if (is_front_page()) {
+        wp_enqueue_script('panbe-chat-demo', get_stylesheet_directory_uri() . '/js/chat-demo.js', array(), filemtime(get_stylesheet_directory() . '/js/chat-demo.js'), true);
+    }
 
     wp_enqueue_script('jquery');
 }

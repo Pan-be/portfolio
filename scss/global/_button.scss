@@ -2,6 +2,7 @@
 
 .button {
 
+    font-family: inherit;
     font-size: u.rem(14);
     font-weight: 700;
     padding: 9px 24px;
@@ -27,6 +28,7 @@
     }
 
     &.secondary {
+        background: none;
         color: var(--color-accent);
 
         &:hover {

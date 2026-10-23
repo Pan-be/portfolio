@@ -191,6 +191,35 @@
 
             </section>
         </div>
+        <?php $pl = my_theme_is_polish(); ?>
+        <section class="ai-offer wrapper" id="asystent-ai">
+            <div class="ai-offer__card">
+                <div class="ai-offer__text">
+                    <h2><?php echo $pl ? 'Asystent AI na stronę' : 'AI assistant for your site'; ?></h2>
+                    <p><?php echo $pl
+                            ? 'Odpowiada klientom 24/7 na pytania o usługi, ceny i przygotowanie do wizyty, z Twojego cennika i FAQ, i kieruje do rezerwacji. Bez porad zdrowotnych i bez zbierania danych o zdrowiu.'
+                            : 'Answers clients 24/7 about services, prices and preparing for a visit, from your price list and FAQ, and sends them to booking. No medical advice and no health data collected.'; ?></p>
+                    <ul class="plan__details">
+                        <?php foreach (
+                            $pl
+                                ? array('Przygotowanie bazy wiedzy z Twojego cennika i FAQ', 'Okno czatu w wyglądzie Twojej strony', 'Przycisk do Booksy albo Twojego kalendarza', 'Abonament: koszty AI, aktualizacje cennika, limit nadużyć')
+                                : array('Knowledge base built from your price list and FAQ', 'Chat window styled like your site', 'Button to Booksy or your own calendar', 'Monthly plan: AI costs, price list updates, abuse limits')
+                            as $feature
+                        ): ?>
+                            <li class="plan__detail"><span class="plus">+</span><span><?php echo esc_html($feature); ?></span></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+                <div class="ai-offer__prices">
+                    <p class="ai-offer__price"><span class="very-small"><?php echo $pl ? 'wdrożenie od' : 'setup from'; ?></span> <?php echo $pl ? '1990 zł' : '€490'; ?></p>
+                    <p class="ai-offer__price"><span class="very-small"><?php echo $pl ? 'abonament od' : 'monthly from'; ?></span> <?php echo $pl ? '199 zł/mies.' : '€49'; ?></p>
+                    <p class="very-small"><?php echo $pl ? 'Ceny netto.' : 'Prices exclude VAT.'; ?></p>
+                    <a class="button secondary" href="<?php echo esc_url((function_exists('pll_home_url') ? pll_home_url() : home_url('/')) . '#asystent-ai'); ?>" data-track="ai_demo_link" data-track-location="pricing"><?php echo $pl ? 'Wypróbuj demo' : 'Try the demo'; ?></a>
+                    <button class="open-modal button primary" data-plan="<?php echo $pl ? 'asystent ai' : 'ai assistant'; ?>"><?php echo $pl ? 'Zapytaj o wdrożenie' : 'Ask about it'; ?></button>
+                </div>
+            </div>
+        </section>
+
         <section class="lastcta wrapper">
             <h2><?php echo esc_html(get_field('contact_title')); ?></h2>
             <p><?php echo esc_html(get_field('contact_content')); ?></p>
