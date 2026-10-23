@@ -23,7 +23,7 @@ source "$conf"
 
 : "${SSH_HOST:?}" "${REMOTE_PATH:?}" "${PROD_URL:?}" "${STAGING_URL:?}"
 : "${STAGING_CONTAINER:?}" "${STAGING_NETWORK:?}" "${PROD_PREFIX:?}" "${BACKUP_DIR:?}"
-CLI_IMAGE="${CLI_IMAGE:-wordpress:cli-php8.2}"
+CLI_IMAGE="${CLI_IMAGE:-wordpress:cli-php8.5}"
 DB_IMAGE="${DB_IMAGE:-mariadb:11.4}"
 
 mode=dry
@@ -115,9 +115,12 @@ backup_prod() {
 }
 
 import_to_prod() {
-  local dump="$1" remote="panbe-publish-$stamp.sql"
-  scp -q -o BatchMode=yes -o ControlPath="$work/ssh-%C" "$dump" "$SSH_HOST:$remote"
-  $ssh_cmd "$SSH_HOST" "cd $REMOTE_PATH && wp db import ~/$remote; rc=\$?; rm -f ~/$remote; exit \$rc"
+  local dump="$1"
+  # Since PHP 8.5 Hostinger also disables proc_open(), which `wp db import` needs,
+  # so feed the dump to the mariadb client directly, the same way as the backup.
+  $ssh_cmd "$SSH_HOST" "cd $REMOTE_PATH && MYSQL_PWD=\"\$(wp config get DB_PASSWORD)\" mariadb \
+    -u \"\$(wp config get DB_USER)\" -h \"\$(wp config get DB_HOST)\" \
+    \"\$(wp config get DB_NAME)\"" < "$dump" || die "production import failed"
 }
 
 if [[ $mode == rollback ]]; then
