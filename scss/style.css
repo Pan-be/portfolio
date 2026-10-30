@@ -831,6 +831,48 @@ li {
   font-weight: 400;
 }
 
+.developer__skills, .developer__workflow {
+  display: grid;
+  gap: 20px;
+}
+.developer__skill-groups {
+  display: grid;
+  gap: 24px;
+}
+@media (width >= 43.75em) {
+  .developer__skill-groups {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+  }
+}
+.developer__skill-groups > div {
+  padding: 20px;
+  border: 2px solid var(--color-accent);
+  border-radius: 12px;
+}
+.developer__skill-groups h3 {
+  margin: 0;
+}
+.developer__skill-groups p {
+  margin-block: 8px 0;
+}
+.developer__workflow ul {
+  max-width: 70ch;
+  padding-inline-start: 1.2em;
+}
+.developer__workflow li + li {
+  margin-block-start: 10px;
+}
+
+@media (width >= 43.75em) {
+  .projects__item--text {
+    grid-template-columns: 1fr;
+  }
+}
+.projects__item--text p {
+  max-width: 70ch;
+}
+
 @media (width >= 43.75em) {
   .contact {
     justify-items: center;

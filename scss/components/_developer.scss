@@ -1,0 +1,57 @@
+@use '../util/' as u;
+
+// Developer page for recruiters (page-developer.php). Reuses .hero, .projects and .contact.
+.developer {
+
+    &__skills,
+    &__workflow {
+        display: grid;
+        gap: 20px;
+    }
+
+    &__skill-groups {
+        display: grid;
+        gap: 24px;
+
+        @include u.breakpoint(medium) {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+        }
+
+        > div {
+            padding: 20px;
+            border: 2px solid var(--color-accent);
+            border-radius: 12px;
+        }
+
+        h3 {
+            margin: 0;
+        }
+
+        p {
+            margin-block: 8px 0;
+        }
+    }
+
+    &__workflow {
+        ul {
+            max-width: 70ch;
+            padding-inline-start: 1.2em;
+        }
+
+        li + li {
+            margin-block-start: 10px;
+        }
+    }
+}
+
+// Project without an image: the text takes the whole card.
+.projects__item--text {
+    @include u.breakpoint(medium) {
+        grid-template-columns: 1fr;
+    }
+
+    p {
+        max-width: 70ch;
+    }
+}

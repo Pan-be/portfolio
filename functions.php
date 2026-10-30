@@ -556,3 +556,15 @@ function panbe_hide_rest_users($endpoints)
     }
     return $endpoints;
 }
+
+// The developer page is for recruiters with the link from the CV, not for search results.
+add_filter('wp_robots', 'panbe_developer_noindex');
+function panbe_developer_noindex($robots)
+{
+    if (is_page_template('page-developer.php')) {
+        $robots['noindex'] = true;
+        $robots['nofollow'] = true;
+        unset($robots['max-image-preview']);
+    }
+    return $robots;
+}

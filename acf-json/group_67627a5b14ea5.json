@@ -50,6 +50,27 @@
             "append": ""
         },
         {
+            "key": "field_6a2fd0c1e7a10",
+            "label": "Technical description",
+            "name": "project_tech",
+            "aria-label": "",
+            "type": "wysiwyg",
+            "instructions": "Shown only on the developer page: stack, what I did, how. Empty = the post content is used.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "allow_in_bindings": 0,
+            "tabs": "all",
+            "toolbar": "full",
+            "media_upload": 1,
+            "delay": 0
+        },
+        {
             "key": "field_67627a8196e30",
             "label": "Website Button Text",
             "name": "website_button_text",
@@ -146,5 +167,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1791981148
+    "modified": 1793361486
 }
