@@ -18,6 +18,12 @@
             gap: 40px;
         }
 
+        > div {
+            padding: 20px;
+            border: 2px solid var(--color-accent);
+            border-radius: 12px;
+        }
+
         h3 {
             margin: 0;
         }
