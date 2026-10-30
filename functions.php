@@ -568,3 +568,17 @@ function panbe_developer_noindex($robots)
     }
     return $robots;
 }
+
+// Keep it out of the WordPress sitemap as well.
+add_filter('wp_sitemaps_posts_query_args', 'panbe_developer_sitemap_exclude', 10, 2);
+function panbe_developer_sitemap_exclude($args, $postType)
+{
+    if ($postType === 'page') {
+        $args['meta_query'] = array(
+            'relation' => 'OR',
+            array('key' => '_wp_page_template', 'value' => 'page-developer.php', 'compare' => '!='),
+            array('key' => '_wp_page_template', 'compare' => 'NOT EXISTS'),
+        );
+    }
+    return $args;
+}
