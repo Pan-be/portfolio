@@ -33,6 +33,9 @@
     if ($panbe_description === '') {
         $panbe_description = 'Pan.Be - Freelance Web Developer. I build modern, responsive websites, e-commerce platforms, and custom web applications.';
     }
+    if (is_page_template('page-developer.php') && get_field('dev_description')) {
+        $panbe_description = get_field('dev_description');
+    }
     $panbe_title = wp_get_document_title();
     ?>
     <meta name="description" content="<?php echo esc_attr($panbe_description); ?>">
