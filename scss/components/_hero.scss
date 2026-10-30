@@ -58,11 +58,17 @@
         gap: 16px;
     }
 
+    // Portrait photo with its edges faded into the page background, so no rounded frame.
+    // On phones it stays narrower, so the buttons and the next section don't drop too far.
     &__image {
         max-width: u.rem(460);
 
+        @include u.breakpoint-down(medium) {
+            max-width: 70%;
+            justify-self: center;
+        }
+
         img {
-            border-radius: 20px;
             width: 100%;
         }
     }

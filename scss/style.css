@@ -358,8 +358,13 @@ li {
 .hero__image {
   max-width: 28.75rem;
 }
+@media (width < 43.75em) {
+  .hero__image {
+    max-width: 70%;
+    justify-self: center;
+  }
+}
 .hero__image img {
-  border-radius: 20px;
   width: 100%;
 }
 
