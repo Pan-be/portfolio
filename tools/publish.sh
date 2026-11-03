@@ -156,9 +156,14 @@ for what in "core version" "option get db_version"; do
   fi
 done
 plugins='plugin list --status=active,must-use --fields=name,version --format=csv'
-diff <(prod_wp $plugins | sort) <(staging_wp $plugins | sort) >/dev/null \
-  || { diff <(prod_wp $plugins | sort) <(staging_wp $plugins | sort) || true; die "active plugins differ"; }
-echo "  active plugins: identical"
+# hostinger-auto-updates is a must-use plugin Hostinger manages on prod and
+# changes on its own (1.0.8 -> 1.0.7 between 2026-10-30 and 2026-11-03). It is
+# files only, and this script moves the database, so it is left out of the check.
+unmanaged='^hostinger-auto-updates,'
+plugin_list() { "$1" $plugins | { grep -v "$unmanaged" || true; } | sort; }
+diff <(plugin_list prod_wp) <(plugin_list staging_wp) >/dev/null \
+  || { diff <(plugin_list prod_wp) <(plugin_list staging_wp) || true; die "active plugins differ"; }
+echo "  active plugins: identical (hostinger-auto-updates not compared)"
 
 say "Exporting staging"
 staging_wp db export - > "$work/staging.sql"
