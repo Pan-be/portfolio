@@ -21,6 +21,9 @@ plugins (name + version) differ between the two, so a half-done update also bloc
      `~/backups/pan-be-staging-<date>.sql`;
    - update with the one-off WP-CLI container (as in `publish.sh`, but without `:ro` on the volumes):
      `wp core update --version=X`, `wp plugin update <slug> --version=X`, naming exact versions;
+     if `plugin update --version` fails with `Undefined property: stdClass::$download_link` (seen with
+     ACF), install the exact zip: `wp plugin install https://downloads.wordpress.org/plugin/<slug>.<X>.zip --force`;
+     the version WP-CLI lists as waiting can lag behind wordpress.org, so check the latest there;
    - check: home PL and EN, `/cennik/`, `/en/pricing/`, a blog post, the contact form (submit once),
      `wp-admin` login (2FA), editing a page with ACF fields, and the PHP error log.
 4. **Production**, the same day:
@@ -37,4 +40,5 @@ plugins (name + version) differ between the two, so a half-done update also bloc
 
 | Date | What | Staging | Production |
 |---|---|---|---|
+| 2026-11-10 | First round (security fixes): core 7.1.4 on staging; ACF 6.8.11, CF7 6.2.5, Polylang 3.9.2, SG Optimizer 7.8.6, SVG Support 2.6.3, WPvivid 0.9.140 on both. Backups: staging `~/backups/pan-be-staging-2026-11-10-before-updates.sql`, prod `prod-20261110-before-updates.sql.gz`. Checked: pages 200 without PHP messages, PL/EN, CF7 validation, error log quiet | core 7.1.4, all identical | core 7.1.4, all identical |
 | 2026-11-10 | Baseline. Two Factor 0.17.0 added (2FA). Waiting: core 7.1.4 (staging only), ACF 6.8.11, CF7 6.2.4.1, Polylang 3.9.2, SG Optimizer 7.8.6, SVG Support 2.6.3, WPvivid 0.9.140 | core 7.1.3 | core 7.1.4 |
